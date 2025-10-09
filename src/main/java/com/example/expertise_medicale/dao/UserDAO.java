@@ -21,10 +21,14 @@ public class UserDAO<T> {
         em.getTransaction().begin();
         em.persist(t);
         em.getTransaction().commit();
+        em.close();
     }
 
     public void update(T t){
+        em.getTransaction().begin();
         em.merge(t);
+        em.getTransaction().commit();
+        em.close();
     }
 
     public T find(String id){

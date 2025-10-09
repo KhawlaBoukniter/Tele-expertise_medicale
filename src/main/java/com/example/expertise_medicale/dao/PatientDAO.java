@@ -16,7 +16,6 @@ public class PatientDAO {
     }
 
     public void add(Patient p) {
-        EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.persist(p);
         em.getTransaction().commit();
@@ -25,7 +24,10 @@ public class PatientDAO {
 
 
         public void update(Patient patient){
+            em.getTransaction().begin();
             em.merge(patient);
+            em.getTransaction().commit();
+            em.close();
         }
 
         public Patient find(Patient patient){
