@@ -35,4 +35,8 @@ public class UserService<T extends User> {
                 .filter(user -> user.getEmail().equalsIgnoreCase(email) && BCrypt.checkpw(password, user.getPassword()))
                 .findFirst().orElse(null);
     }
+
+    public T findById(Long id) {
+        return findAll().stream().filter(u -> id.equals(u.getId())).findFirst().orElse(null);
+    }
 }
