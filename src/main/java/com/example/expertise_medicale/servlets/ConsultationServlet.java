@@ -1,9 +1,12 @@
 package com.example.expertise_medicale.servlets;
 
+import com.example.expertise_medicale.models.ActeMedical;
 import com.example.expertise_medicale.models.Consultation;
 import com.example.expertise_medicale.models.DossierMedical;
 import com.example.expertise_medicale.models.Generaliste;
 import com.example.expertise_medicale.models.enums.StatutConsultation;
+import com.example.expertise_medicale.models.enums.TypeActeMedical;
+import com.example.expertise_medicale.services.ActeMedicalService;
 import com.example.expertise_medicale.services.ConsultationService;
 import com.example.expertise_medicale.services.GeneralisteService;
 import com.example.expertise_medicale.services.PatientService;
@@ -21,6 +24,7 @@ public class ConsultationServlet extends HttpServlet {
     private ConsultationService consultationService = new ConsultationService();
     private GeneralisteService generalisteService = new GeneralisteService();
     private PatientService patientService = new PatientService();
+    private ActeMedicalService acteMedicalService = new ActeMedicalService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String patientId = request.getParameter("patient_id");
@@ -60,6 +64,18 @@ public class ConsultationServlet extends HttpServlet {
         consultation.setStatus(statutConsultation);
 
         consultationService.add(consultation, dossierMedical);
+
+        String[] actesMedicaux = request.getParameterValues("actesMedicaux");
+        if (actesMedicaux != null) {
+            for (String acteStr : actesMedicaux) {
+                TypeActeMedical type = TypeActeMedical.valueOf(acteStr);
+                ActeMedical acte = new ActeMedical();
+                acte.setActeMedical(type);
+                acte.setConsultation(consultation);
+                acte.setCout(200.0);
+                acteMedicalService.add(acte);
+            }
+        }
 
         response.sendRedirect("generalistes?action=list");
     }
