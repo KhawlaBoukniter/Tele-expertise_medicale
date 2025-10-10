@@ -18,7 +18,6 @@ public class ActeMedicalDAO {
             em.getTransaction().begin();
             em.persist(acteMedical);
             em.getTransaction().commit();
-            em.close();
         }
 
         public void update(ActeMedical acteMedical){
