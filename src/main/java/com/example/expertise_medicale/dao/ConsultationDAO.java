@@ -18,15 +18,14 @@ public class ConsultationDAO {
             em.getTransaction().begin();
             em.persist(consultation);
             em.getTransaction().commit();
-            em.close();
         }
 
         public void update(Consultation consultation){
             em.merge(consultation);
         }
 
-        public Consultation find(Consultation consultation){
-            return em.find(Consultation.class, consultation.getId());
+        public Consultation find(Long id){
+            return em.find(Consultation.class,  id);
         }
 
         public void delete(Consultation consultation){
@@ -34,6 +33,7 @@ public class ConsultationDAO {
         }
 
         public List<Consultation> findAll(){
+            em = emf.createEntityManager();
             return em.createQuery("from Consultation", Consultation.class).getResultList();
         }
 
