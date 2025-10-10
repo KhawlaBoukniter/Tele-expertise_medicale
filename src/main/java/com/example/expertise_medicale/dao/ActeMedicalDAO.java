@@ -1,10 +1,11 @@
 package com.example.expertise_medicale.dao;
 
 import com.example.expertise_medicale.models.ActeMedical;
-import com.example.expertise_medicale.models.Generaliste;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+
+import java.util.List;
 
 public class ActeMedicalDAO {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("expertiseMedicale");
@@ -32,5 +33,8 @@ public class ActeMedicalDAO {
             em.remove(acteMedical);
         }
 
+        public List<ActeMedical> findAll(){
+            return em.createQuery("select a from ActeMedical a").getResultStream().toList();
+        }
 
 }
