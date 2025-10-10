@@ -1,5 +1,6 @@
 package com.example.expertise_medicale.models;
 
+import com.example.expertise_medicale.models.enums.TypeActeMedical;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,9 +13,20 @@ public class ActeMedical {
 
     private Double cout;
 
+    @Enumerated(EnumType.STRING)
+    private TypeActeMedical acteMedical;
+
     @ManyToOne
     @JoinColumn(name = "consultation_id", nullable = false)
     private Consultation consultation;
+
+    public TypeActeMedical getActeMedical() {
+        return acteMedical;
+    }
+
+    public void setActeMedical(TypeActeMedical acteMedical) {
+        this.acteMedical = acteMedical;
+    }
 
     public Long getId() {
         return id;
