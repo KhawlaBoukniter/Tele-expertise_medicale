@@ -38,17 +38,12 @@
         </div>
 
         <div class="row mb-3">
-<%--            <div class="col-md-4">--%>
-<%--                <label for="date" class="form-label">Date de Consultation :</label>--%>
-<%--                <input type="datetime-local" class="form-control" id="date" name="date_consultation" required>--%>
-<%--            </div>--%>
-
             <div class="col-md-4">
                 <label for="cout" class="form-label">Coût :</label>
                 <input type="number" class="form-control" id="cout" name="cout" step="0.01" required>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="status" class="form-label">Statut :</label>
                 <select class="form-select" id="status" name="status">
                     <option value="EN_ATTENTE_AVIS_SPECIALISTE">En attente avis spécialiste</option>
@@ -57,6 +52,43 @@
                 </select>
             </div>
         </div>
+
+        <div class="mb-3">
+            <label class="form-label">Actes Médicaux :</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="actesMedicaux" value="RADIOGRAPHIE" id="radio">
+                <label class="form-check-label" for="radio">Radiographie</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="actesMedicaux" value="ECHOGRAPHIE" id="echo">
+                <label class="form-check-label" for="echo">Échographie</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="actesMedicaux" value="IRM" id="irm">
+                <label class="form-check-label" for="irm">IRM</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="actesMedicaux" value="Électrocardiogramme" id="ecg">
+                <label class="form-check-label" for="ecg">Électrocardiogramme</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="actesMedicaux" value="DERMATOLOGIQUES" id="derm">
+                <label class="form-check-label" for="derm">Dermatologiques</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="actesMedicaux" value="FOND_OEIL" id="oeil">
+                <label class="form-check-label" for="oeil">Fond d’œil</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="actesMedicaux" value="ANALYSE_SANG" id="sang">
+                <label class="form-check-label" for="sang">Analyse de sang</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="actesMedicaux" value="ANALYSE_URINE" id="urine">
+                <label class="form-check-label" for="urine">Analyse d’urine</label>
+            </div>
+        </div>
+
 
         <div class="text-center">
             <button type="submit" class="btn btn-primary px-4">Enregistrer</button>
