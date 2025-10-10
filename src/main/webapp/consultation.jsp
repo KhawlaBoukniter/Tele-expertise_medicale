@@ -13,27 +13,8 @@
     <form action="consultation" method="post" class="card p-4 shadow-sm">
 
         <div class="row mb-3">
-<%--            <div class="col-md-6">--%>
-<%--                <label for="dossier" class="form-label">Dossier Médical :</label>--%>
-<%--                <select class="form-select" id="dossier" name="dossier_id" required>--%>
-<%--                    <option value="">-- Sélectionner un dossier --</option>--%>
-<%--                    <c:forEach var="d" items="${dossiers}">--%>
-<%--                        <option value="${d.id}">${d.patient.nom} ${d.patient.prenom}</option>--%>
-<%--                    </c:forEach>--%>
-<%--                </select>--%>
-<%--            </div>--%>
-
-<%--            <div class="col-md-6">--%>
-<%--                <label for="generaliste" class="form-label">Généraliste :</label>--%>
-<%--                <select class="form-select" id="generaliste" name="generaliste_id" required>--%>
-<%--                    <option value="">-- Sélectionner un généraliste --</option>--%>
-<%--                    <c:forEach var="g" items="${generalistes}">--%>
-<%--                        <option value="${g.id}">${g.nom} ${g.prenom}</option>--%>
-<%--                    </c:forEach>--%>
-<%--                </select>--%>
-<%--            </div>--%>
-            <input type="number" name="generaliste_id" id="generaliste_id" value="${user.id}" hidden>
-            <input type="number" name="patient_id" id="patient_id" value="${p.id}" hidden>
+            <input type="hidden" name="generaliste_id" value="${user.id}">
+            <input type="hidden" name="patient_id" value="${patient_id}">
         </div>
 
         <div class="mb-3">
@@ -70,8 +51,8 @@
             <div class="col-md-4">
                 <label for="status" class="form-label">Statut :</label>
                 <select class="form-select" id="status" name="status">
-                    <option value="EN_ATTENTE_AVIS_SPECIALISTE">En attente</option>
-                    <option value="EN_COURS">En cours</option>
+                    <option value="EN_ATTENTE_AVIS_SPECIALISTE">En attente avis spécialiste</option>
+                    <option value="EN_ATTENTE">En attente</option>
                     <option value="TERMINEE">Terminée</option>
                 </select>
             </div>

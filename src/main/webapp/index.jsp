@@ -9,7 +9,7 @@
 </h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a><br>
-<a href="generalistes">Hello generalist</a><br>
+<a href="generaliste?action=list">Hello generalist</a><br>
 <a href="patient?action=list">Hello infirmier</a><br>
 <a href="login">login</a><br>
 
