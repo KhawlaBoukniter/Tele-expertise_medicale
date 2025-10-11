@@ -19,7 +19,6 @@ public class PatientDAO {
         em.getTransaction().begin();
         em.persist(p);
         em.getTransaction().commit();
-        em.close();
     }
 
 
@@ -27,7 +26,6 @@ public class PatientDAO {
             em.getTransaction().begin();
             em.merge(patient);
             em.getTransaction().commit();
-            em.close();
         }
 
         public Patient find(Patient patient){
@@ -39,6 +37,7 @@ public class PatientDAO {
         }
 
         public List<Patient> findAll(){
+            em = emf.createEntityManager();
             List<Patient> list = em.createQuery("SELECT p FROM Patient p", Patient.class).getResultList();
             return list;
         }
