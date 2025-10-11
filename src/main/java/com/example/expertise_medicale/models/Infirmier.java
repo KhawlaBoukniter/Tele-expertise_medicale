@@ -4,26 +4,15 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "infirmiers")
-public class Infirmier {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@PrimaryKeyJoinColumn(name = "id")
+public class Infirmier extends User {
 
     @Column(columnDefinition = "TEXT")
     private String liste_patients;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    public Infirmier() { super(); }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Infirmier(String liste_patients) { this.liste_patients = liste_patients; }
 
     public String getListe_patients() {
         return liste_patients;
@@ -33,20 +22,11 @@ public class Infirmier {
         this.liste_patients = liste_patients;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     @Override
     public String toString() {
         return "Infirmier{" +
-                "id=" + id +
                 ", liste_patients='" + liste_patients + '\'' +
-                ", user=" + user +
                 '}';
     }
 }
