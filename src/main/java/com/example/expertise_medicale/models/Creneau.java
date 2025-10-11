@@ -13,7 +13,6 @@ public class Creneau {
 
     private LocalDateTime date_debut;
     private LocalDateTime date_fin;
-    private Integer duree;
     private Boolean disponible;
 
     @ManyToOne
@@ -44,14 +43,6 @@ public class Creneau {
         this.date_fin = date_fin;
     }
 
-    public Integer getDuree() {
-        return duree;
-    }
-
-    public void setDuree(Integer duree) {
-        this.duree = duree;
-    }
-
     public Boolean getDisponible() {
         return disponible;
     }
@@ -74,7 +65,6 @@ public class Creneau {
                 "id=" + id +
                 ", date_debut=" + date_debut +
                 ", date_fin=" + date_fin +
-                ", duree=" + duree +
                 ", disponible=" + disponible +
                 ", specialiste=" + specialiste +
                 '}';
