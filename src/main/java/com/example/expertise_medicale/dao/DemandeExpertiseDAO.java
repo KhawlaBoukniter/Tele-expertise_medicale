@@ -1,10 +1,14 @@
 package com.example.expertise_medicale.dao;
 
+import com.example.expertise_medicale.models.Consultation;
 import com.example.expertise_medicale.models.DemandeExpertise;
 import com.example.expertise_medicale.models.Generaliste;
+import com.example.expertise_medicale.models.Specialiste;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+
+import java.util.List;
 
 public class DemandeExpertiseDAO {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("expertiseMedicale");
@@ -28,13 +32,17 @@ public class DemandeExpertiseDAO {
             em.close();
         }
 
-        public DemandeExpertise find(DemandeExpertise demandeExpertise){
-            return em.find(DemandeExpertise.class, demandeExpertise.getId());
+        public DemandeExpertise find(Long id){
+            return em.find(DemandeExpertise.class, id);
         }
 
         public void delete(DemandeExpertise demandeExpertise){
             em.remove(demandeExpertise);
         }
 
+        public List<DemandeExpertise> findAll(){
+            return em.createQuery("from DemandeExpertise ", DemandeExpertise.class).getResultList();
+
+        }
 
 }
