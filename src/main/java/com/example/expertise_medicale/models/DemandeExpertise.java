@@ -1,5 +1,6 @@
 package com.example.expertise_medicale.models;
 
+import com.example.expertise_medicale.models.enums.Priorite;
 import com.example.expertise_medicale.models.enums.StatutDemande;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -16,6 +17,9 @@ public class DemandeExpertise {
     private LocalDateTime date_reponse;
     private String question;
 
+    @Enumerated(EnumType.STRING)
+    private Priorite priorite;
+
     @Column(columnDefinition = "TEXT")
     private String avis;
 
@@ -29,6 +33,18 @@ public class DemandeExpertise {
     @ManyToOne
     @JoinColumn(name = "specialiste_id", nullable = false)
     private Specialiste specialiste;
+
+    @ManyToOne
+    @JoinColumn(name = "creneau_id")
+    private Creneau creneau;
+
+    public Creneau getCreneau() {
+        return creneau;
+    }
+
+    public void setCreneau(Creneau creneau) {
+        this.creneau = creneau;
+    }
 
     public Long getId() {
         return id;
@@ -60,6 +76,14 @@ public class DemandeExpertise {
 
     public void setQuestion(String question) {
         this.question = question;
+    }
+
+    public Priorite getPriorite() {
+        return priorite;
+    }
+
+    public void setPriorite(Priorite priorite) {
+        this.priorite = priorite;
     }
 
     public String getAvis() {
@@ -101,10 +125,13 @@ public class DemandeExpertise {
                 ", date_demande=" + date_demande +
                 ", date_reponse=" + date_reponse +
                 ", question='" + question + '\'' +
+                ", priorite=" + priorite +
+                ", creneau=" + creneau +
                 ", avis='" + avis + '\'' +
                 ", statut=" + statut +
                 ", consultation=" + consultation +
                 ", specialiste=" + specialiste +
                 '}';
     }
+
 }
