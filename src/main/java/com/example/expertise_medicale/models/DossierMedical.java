@@ -17,6 +17,16 @@ public class DossierMedical {
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
+    @Column(columnDefinition = "TEXT")
+    private String antecedents;
+
+    @Column(columnDefinition = "TEXT")
+    private String allergies;
+
+    @Column(columnDefinition = "TEXT")
+    private String traitements;
+
+
     public Long getId() {
         return id;
     }
@@ -41,12 +51,40 @@ public class DossierMedical {
         this.patient = patient;
     }
 
+    public String getAntecedents() {
+        return antecedents;
+    }
+
+    public void setAntecedents(String antecedents) {
+        this.antecedents = antecedents;
+    }
+
+    public String getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(String allergies) {
+        this.allergies = allergies;
+    }
+
+    public String getTraitements() {
+        return traitements;
+    }
+
+    public void setTraitements(String traitements) {
+        this.traitements = traitements;
+    }
+
+
     @Override
     public String toString() {
         return "DossierMedical{" +
                 "id=" + id +
                 ", date_creation=" + date_creation +
                 ", patient=" + patient +
+                ", antecedents='" + antecedents + '\'' +
+                ", allergies='" + allergies + '\'' +
+                ", traitements='" + traitements + '\'' +
                 '}';
     }
 }
