@@ -6,6 +6,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.util.List;
+
 public class DossierMedicalDAO {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("expertiseMedicale");
     private EntityManager em;
@@ -15,17 +17,21 @@ public class DossierMedicalDAO {
     }
 
         public void add(DossierMedical dossierMedical){
-            em.getTransaction().begin();
-            em.persist(dossierMedical);
-            em.getTransaction().commit();
-            em.close();
+            try {
+                em.getTransaction().begin();
+                em.persist(dossierMedical);
+                em.getTransaction().commit();
+            } catch (Exception e) {
+                if (em.getTransaction().isActive()) {
+                    em.getTransaction().rollback();
+                }
+                e.printStackTrace();
+            }
         }
 
         public void update(DossierMedical dossierMedical){
-            em.getTransaction().begin();
             em.merge(dossierMedical);
             em.getTransaction().commit();
-            em.close();
         }
 
         public DossierMedical find(DossierMedical dossierMedical){
@@ -37,4 +43,8 @@ public class DossierMedicalDAO {
         }
 
 
+    public List<DossierMedical> findAll() {
+        return em.createQuery("from DossierMedical ", DossierMedical.class).getResultList();
+
+    }
 }
