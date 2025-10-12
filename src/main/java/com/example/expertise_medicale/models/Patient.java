@@ -1,6 +1,10 @@
 package com.example.expertise_medicale.models;
 
+import com.example.expertise_medicale.models.enums.PatientStatus;
+import jakarta.enterprise.inject.Default;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,16 +19,11 @@ public class Patient {
     private String prenom;
 
     @Column(columnDefinition = "TEXT")
-    private String antecedents;
-
-    @Column(columnDefinition = "TEXT")
-    private String allergies;
-
-    @Column(columnDefinition = "TEXT")
-    private String traitements;
-
-    @Column(columnDefinition = "TEXT")
     private String coordonnees;
+
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("'EN_ATTENTE'")
+    private PatientStatus status;
 
     private Boolean mutuelle;
     private String numero_securite_sociale;
@@ -55,30 +54,6 @@ public class Patient {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
-    }
-
-    public String getAntecedents() {
-        return antecedents;
-    }
-
-    public void setAntecedents(String antecedents) {
-        this.antecedents = antecedents;
-    }
-
-    public String getAllergies() {
-        return allergies;
-    }
-
-    public void setAllergies(String allergies) {
-        this.allergies = allergies;
-    }
-
-    public String getTraitements() {
-        return traitements;
-    }
-
-    public void setTraitements(String traitements) {
-        this.traitements = traitements;
     }
 
     public String getCoordonnees() {
@@ -117,6 +92,13 @@ public class Patient {
 
     public void setSignesVitaux(List<SigneVital> signesVitaux) { this.signesVitaux = signesVitaux; }
 
+    public PatientStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PatientStatus status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {
@@ -124,9 +106,7 @@ public class Patient {
                 "id='" + id + '\'' +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
-                ", antecedents='" + antecedents + '\'' +
-                ", allergies='" + allergies + '\'' +
-                ", traitements='" + traitements + '\'' +
+                ", statut='" + status + '\'' +
                 ", coordonnees='" + coordonnees + '\'' +
                 ", mutuelle=" + mutuelle +
                 ", numero_securite_sociale='" + numero_securite_sociale + '\'' +
