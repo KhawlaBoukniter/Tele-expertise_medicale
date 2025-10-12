@@ -2,8 +2,11 @@ package com.example.expertise_medicale.services;
 
 import com.example.expertise_medicale.dao.ConsultationDAO;
 import com.example.expertise_medicale.dao.DossierMedicalDAO;
+import com.example.expertise_medicale.models.ActeMedical;
 import com.example.expertise_medicale.models.Consultation;
 import com.example.expertise_medicale.models.DossierMedical;
+import com.example.expertise_medicale.models.enums.StatutConsultation;
+import com.example.expertise_medicale.models.enums.StatutDemande;
 
 import java.util.List;
 
@@ -25,5 +28,21 @@ public class ConsultationService {
 
     public List<Consultation> findAll(){ return consultationDAO.findAll(); }
 
+    public List<Consultation> findEnAttente() {
+        return findAll().stream()
+            .filter(c -> c.getStatus().equals(StatutConsultation.EN_ATTENTE_AVIS_SPECIALISTE))
+                .toList();
+    }
 
+    public Consultation findById(Long id) {
+        return consultationDAO.find(id);
+    }
+
+    public List<Consultation> findByStatusAndSpecialiste(StatutConsultation status, Long specialisteId) {
+        return findAll().stream()
+                .filter(c -> c.getStatus() == status
+                        && c.getDossier().getPatient() != null
+                        && c.getGeneraliste().getId().equals(specialisteId))
+                .toList();
+    }
 }
