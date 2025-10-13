@@ -1,9 +1,7 @@
 package com.example.expertise_medicale.servlets;
 
-import com.example.expertise_medicale.models.ActeMedical;
-import com.example.expertise_medicale.models.Consultation;
-import com.example.expertise_medicale.models.DossierMedical;
-import com.example.expertise_medicale.models.Generaliste;
+import com.example.expertise_medicale.models.*;
+import com.example.expertise_medicale.models.enums.PatientStatus;
 import com.example.expertise_medicale.models.enums.StatutConsultation;
 import com.example.expertise_medicale.models.enums.TypeActeMedical;
 import com.example.expertise_medicale.services.ActeMedicalService;
@@ -29,6 +27,18 @@ public class ConsultationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String patientId = request.getParameter("patient_id");
         String generalisteId = request.getParameter("generaliste_id");
+        String action = request.getParameter("action");
+
+        if (action == null) action = "add";
+
+        request.setAttribute("user", request.getSession().getAttribute("user"));
+
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+        request.setAttribute("user", user);
 
         if (patientId != null) {
             request.setAttribute("patient_id", patientId);
@@ -37,7 +47,17 @@ public class ConsultationServlet extends HttpServlet {
             request.setAttribute("generaliste_id", generalisteId);
         }
 
-        request.getRequestDispatcher("consultation.jsp").forward(request, response);
+        if (action.equals("edit")) {
+            String consultationId = request.getParameter("id");
+            Consultation consultation = consultationService.findById(Long.valueOf(consultationId));
+            request.setAttribute("consultation", consultation);
+            request.setAttribute("actes", acteMedicalService.getActesByConsultation(Long.valueOf(consultationId)).stream().map(a -> a.getActeMedical().name()).toList());
+            request.setAttribute("action", "edit");
+            request.getRequestDispatcher("consultation.jsp").forward(request, response);
+        } else if (action.equals("add")) {
+            request.setAttribute("action", "add");
+            request.getRequestDispatcher("consultation.jsp").forward(request, response);
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -64,6 +84,9 @@ public class ConsultationServlet extends HttpServlet {
         consultation.setStatus(statutConsultation);
 
         consultationService.add(consultation, dossierMedical);
+        Patient patient = patientService.findById(request.getParameter("patient_id"));
+        patient.setStatus(PatientStatus.TERMINEE);
+        patientService.update(patient);
 
         String[] actesMedicaux = request.getParameterValues("actesMedicaux");
         if (actesMedicaux != null) {
@@ -74,10 +97,13 @@ public class ConsultationServlet extends HttpServlet {
                 acte.setConsultation(consultation);
                 acte.setCout(200.0);
                 acteMedicalService.add(acte);
+
+                consultation.setCout(consultation.getCout() + acte.getCout());
+                consultationService.update(consultation);
             }
         }
 
-        response.sendRedirect("generalistes?action=list");
+        response.sendRedirect("generaliste?action=list");
     }
 
 }
