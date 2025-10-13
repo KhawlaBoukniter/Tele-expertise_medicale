@@ -5,6 +5,7 @@ import com.example.expertise_medicale.models.User;
 import com.example.expertise_medicale.models.enums.Role;
 import com.example.expertise_medicale.services.AuthService;
 import com.example.expertise_medicale.services.PatientService;
+import com.example.expertise_medicale.services.SpecialisteService;
 import com.example.expertise_medicale.services.UserService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -43,15 +44,15 @@ public class LoginServlet extends HttpServlet {
             List<Patient> patients = patientService.findByToday();
 
             if (user.getRole().equals(Role.GENERALISTE)) {
-                request.getSession().setAttribute("patients", patients);
-                request.getRequestDispatcher("/generaliste.jsp").forward(request, response);
-
+//                request.getSession().setAttribute("patients", patients);
+//                request.getRequestDispatcher("/generaliste.jsp").forward(request, response);
+                    response.sendRedirect(request.getContextPath() + "/generaliste?action=list");
             } else if (user.getRole().equals(Role.INFIRMIER)) {
                 request.getSession().setAttribute("patients", patients);
                 request.getRequestDispatcher("/patients.jsp").forward(request, response);
 
             } else if (user.getRole().equals(Role.SPECIALISTE)) {
-                response.sendRedirect(request.getContextPath() + "/specialiste.jsp");
+                response.sendRedirect("specialiste");
 
             } else {
                 request.setAttribute("error", "Role invalide");
