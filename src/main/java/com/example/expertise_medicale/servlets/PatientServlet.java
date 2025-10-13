@@ -1,7 +1,10 @@
 package com.example.expertise_medicale.servlets;
 
+import com.example.expertise_medicale.models.DossierMedical;
 import com.example.expertise_medicale.models.Patient;
 import com.example.expertise_medicale.models.SigneVital;
+import com.example.expertise_medicale.models.enums.PatientStatus;
+import com.example.expertise_medicale.services.DossierMedicalService;
 import com.example.expertise_medicale.services.PatientService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,6 +19,7 @@ import java.util.List;
 @WebServlet("/patient")
 public class PatientServlet extends HttpServlet {
     private PatientService patientService = new PatientService();
+    private DossierMedicalService dossierMedicalService = new DossierMedicalService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,9 +30,16 @@ public class PatientServlet extends HttpServlet {
                 request.getRequestDispatcher("patient-form.jsp").forward(request, response);
                 break;
             case "list":
-                List<Patient> patients = patientService.findAll();
+                List<Patient> patients = patientService.findByToday();
                 request.setAttribute("patients", patients);
                 request.getRequestDispatcher("patients.jsp").forward(request, response);
+                break;
+            case "search":
+                String cinSearch = request.getParameter("cin");
+                Patient patientSearched = patientService.findById(cinSearch);
+                request.setAttribute("patientFound", patientSearched);
+                request.setAttribute("cinSearch", cinSearch);
+                request.getRequestDispatcher("patient-form.jsp").forward(request, response);
                 break;
             case "edit":
                 break;
@@ -46,18 +57,9 @@ public class PatientServlet extends HttpServlet {
 
         switch (action) {
             case "add":
-                Patient patient = new Patient();
-                patient.setId(request.getParameter("cin"));
-                patient.setNom(request.getParameter("nom"));
-                patient.setPrenom(request.getParameter("prenom"));
-                patient.setAntecedents(request.getParameter("antecedents"));
-                patient.setAllergies(request.getParameter("allergies"));
-                patient.setTraitements(request.getParameter("traitements"));
-                patient.setCoordonnees(request.getParameter("coordonnees"));
-                patient.setMutuelle("on".equals(request.getParameter("mutuelle")));
-                patient.setNumero_securite_sociale(request.getParameter("numero_securite_sociale"));
-                patient.setDateArrivee(LocalDateTime.now());
+                String cin = request.getParameter("cin");
 
+                Patient patientFound = patientService.findById(cin);
 
                 SigneVital signeVital = new SigneVital();
                 signeVital.setDate_mesure(LocalDateTime.now());
@@ -67,9 +69,33 @@ public class PatientServlet extends HttpServlet {
                 signeVital.setFrequence_respiratoire(Double.parseDouble(request.getParameter("frequence_respiratoire")));
                 signeVital.setPoids(Double.parseDouble(request.getParameter("poids")));
                 signeVital.setTaille(Double.parseDouble(request.getParameter("taille")));
-                signeVital.setPatient(patient);
 
-                patientService.add(patient, signeVital);
+                if (patientFound != null) {
+                    signeVital.setPatient(patientFound);
+                    patientFound.setDateArrivee(LocalDateTime.now());
+                    patientService.add(patientFound, signeVital);
+                } else {
+                    Patient patient = new Patient();
+                    patient.setId(request.getParameter("cin"));
+                    patient.setNom(request.getParameter("nom"));
+                    patient.setPrenom(request.getParameter("prenom"));
+                    patient.setCoordonnees(request.getParameter("coordonnees"));
+                    patient.setMutuelle("on".equals(request.getParameter("mutuelle")));
+                    patient.setNumero_securite_sociale(request.getParameter("numero_securite_sociale"));
+                    patient.setDateArrivee(LocalDateTime.parse(request.getParameter("dateArrivee")));
+                    patient.setStatus(PatientStatus.EN_ATTENTE);
+
+                    DossierMedical dossierMedical = new DossierMedical();
+                    dossierMedical.setAntecedents(request.getParameter("antecedents"));
+                    dossierMedical.setAllergies(request.getParameter("allergies"));
+                    dossierMedical.setTraitements(request.getParameter("traitements"));
+                    dossierMedical.setDate_creation(LocalDateTime.now());
+                    dossierMedical.setPatient(patient);
+
+                    signeVital.setPatient(patient);
+                    patientService.add(patient, signeVital);
+                    dossierMedicalService.add(dossierMedical);
+                }
 
                 response.sendRedirect("patient?action=list");
                 break;
