@@ -1,8 +1,12 @@
 package com.example.expertise_medicale.servlets;
 
+import com.example.expertise_medicale.models.Consultation;
+import com.example.expertise_medicale.models.DemandeExpertise;
 import com.example.expertise_medicale.models.Generaliste;
 import com.example.expertise_medicale.models.Patient;
 import com.example.expertise_medicale.models.enums.Role;
+import com.example.expertise_medicale.services.ConsultationService;
+import com.example.expertise_medicale.services.DemandeExpertiseService;
 import com.example.expertise_medicale.services.GeneralisteService;
 import com.example.expertise_medicale.services.PatientService;
 import jakarta.servlet.ServletException;
@@ -19,20 +23,28 @@ import java.util.List;
 public class GeneralisteServlet extends HttpServlet {
     private GeneralisteService generalisteService  = new GeneralisteService();
     private PatientService patientService  = new PatientService();
+    private ConsultationService consultationService = new ConsultationService();
+    private DemandeExpertiseService  demandeExpertiseService = new DemandeExpertiseService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String action = request.getParameter("action");
         if (action == null) { action = "list"; }
 
+        List<Patient> patients = patientService.findByToday();
+        System.out.println(patients);
+        request.setAttribute("patients", patients);
+        List<Consultation> consultations = consultationService.findEnAttente();
+        request.setAttribute("consultations", consultations);
+
+        List<DemandeExpertise> demandes = demandeExpertiseService.findAll();
+        request.setAttribute("demandes", demandes);
+
         switch (action) {
             case "list":
-                List<Patient> patients = patientService.findByToday();
-                request.setAttribute("patients", patients);
                 request.getRequestDispatcher("generaliste.jsp").forward(request, response);
                 break;
             default:
-
                 request.getRequestDispatcher("generaliste.jsp").forward(request, response);
                 break;
         }
