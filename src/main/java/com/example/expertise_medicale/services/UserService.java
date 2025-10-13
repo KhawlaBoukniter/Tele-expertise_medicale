@@ -36,6 +36,10 @@ public class UserService<T extends User> {
                 .findFirst().orElse(null);
     }
 
+    public Boolean existsByEmail(String email) {
+        return findAll().stream().anyMatch(user -> user.getEmail().equalsIgnoreCase(email));
+    }
+
     public T findById(Long id) {
         return findAll().stream().filter(u -> id.equals(u.getId())).findFirst().orElse(null);
     }
