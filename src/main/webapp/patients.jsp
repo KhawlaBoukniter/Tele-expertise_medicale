@@ -23,12 +23,10 @@
             font-weight: bold;
         }
 
-        a:hover {
-            color: #388E3C;
-        }
+        a:hover { color: #388E3C; }
 
         table {
-            width: 80%;
+            width: 90%;
             margin: 0 auto;
             border-collapse: collapse;
             background-color: #fff;
@@ -47,26 +45,27 @@
             font-weight: bold;
         }
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        tr:hover { background-color: #d1e7dd; }
 
-        tr:hover {
-            background-color: #d1e7dd;
-        }
-
-        /* Message si la liste est vide */
         .empty-message {
             text-align: center;
             color: #888;
             margin-top: 20px;
+        }
+
+        @media(max-width: 768px) {
+            table, th, td { font-size: 14px; padding: 8px; }
+            a { font-size: 14px; }
         }
     </style>
 </head>
 <body>
 <h2>Liste des patients</h2>
 
-<a href="patient?action=add">➕ Ajouter un patient</a>
+<c:if test="${user.role.name() == 'INFIRMIER'}">
+    <a href="patient?action=add">➕ Ajouter un patient</a>
+</c:if>
 
 <c:choose>
     <c:when test="${not empty patients}">
@@ -77,14 +76,26 @@
                 <th>Prénom</th>
                 <th>Mutuelle</th>
                 <th>Date d’arrivée</th>
+                <th>Actions</th>
             </tr>
             <c:forEach var="p" items="${patients}">
                 <tr>
                     <td>${p.id}</td>
-                    <td>${p.nom}</td>
+                    <td><a href="dossier?action=view&id=${p.id}">${p.nom}</a></td>
                     <td>${p.prenom}</td>
-                    <td>${p.mutuelle}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${p.mutuelle}">Oui</c:when>
+                            <c:otherwise>Non</c:otherwise>
+                        </c:choose>
+                    </td>
                     <td>${p.dateArrivee}</td>
+                    <td>
+                        <a href="dossier?action=view&id=${p.id}">👁️ Voir</a>
+                        <c:if test="${user.role.name() == 'INFIRMIER'}">
+                            | <a href="patient?action=edit&id=${p.id}">✏️ Modifier</a>
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
