@@ -67,11 +67,14 @@ public class PatientServlet extends HttpServlet {
                 signeVital.setTemperature_corporelle(Double.parseDouble(request.getParameter("temperature_corporelle")));
                 signeVital.setFrequence_cardiaque(Integer.parseInt(request.getParameter("frequence_cardiaque")));
                 signeVital.setFrequence_respiratoire(Double.parseDouble(request.getParameter("frequence_respiratoire")));
-                signeVital.setPoids(Double.parseDouble(request.getParameter("poids")));
-                signeVital.setTaille(Double.parseDouble(request.getParameter("taille")));
+                if (request.getParameter("poids") != null && !request.getParameter("poids").isEmpty()) {
+                    signeVital.setPoids(Double.parseDouble(request.getParameter("poids")));
+                }
+                if (request.getParameter("taille") != null && !request.getParameter("taille").isEmpty()) {
+                    signeVital.setTaille(Double.parseDouble(request.getParameter("taille")));
+                }
 
                 if (patientFound != null) {
-                    signeVital.setPatient(patientFound);
                     patientFound.setDateArrivee(LocalDateTime.now());
                     patientService.add(patientFound, signeVital);
                 } else {
