@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,18 +47,18 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/generaliste?action=list");
             } else if (user.getRole().equals(Role.INFIRMIER)) {
                 request.getSession().setAttribute("patients", patients);
-                request.getRequestDispatcher("/patients.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/patient?action=list");
 
             } else if (user.getRole().equals(Role.SPECIALISTE)) {
                 response.sendRedirect("specialiste");
 
             } else {
                 request.setAttribute("error", "Role invalide");
-                request.getRequestDispatcher("/login.jsp").forward(request, response);
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
         } else  {
             request.setAttribute("error", "Identifiants incorrects");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
 
 
