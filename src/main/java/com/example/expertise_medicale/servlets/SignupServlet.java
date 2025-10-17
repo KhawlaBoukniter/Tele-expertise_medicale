@@ -8,6 +8,7 @@ import com.example.expertise_medicale.models.User;
 
 import com.example.expertise_medicale.models.enums.Role;
 import com.example.expertise_medicale.services.UserService;
+import com.example.expertise_medicale.utils.Validation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -32,6 +33,21 @@ public class SignupServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String roleParam = request.getParameter("role");
+
+        if (!Validation.isValid(nom) || !Validation.isValid(prenom)) {
+            request.setAttribute("error", "Nom / Prenom obligatoire.");
+        } else if (!Validation.isEmail(email)) {
+            request.setAttribute("error", "Email invalide.");
+        } else if (!Validation.isEmail(email)) {
+            request.setAttribute("error", "Email invalide");
+        } else if (!Validation.isValid(password)) {
+            request.setAttribute("error", "Les mots de passe ne correspondent pas.");
+        }
+
+        if (request.getAttribute("error") != null) {
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
+            return;
+        }
 
         if(userService.existsByEmail(email)) {
             request.setAttribute("errorMessage", "Email déjà utilisé");
