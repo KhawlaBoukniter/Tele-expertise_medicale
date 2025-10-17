@@ -42,7 +42,7 @@ public class SpecialisteServlet extends HttpServlet {
 
         request.setAttribute("specialiste", specialiste);
 
-        List<DemandeExpertise> demandes = demandeExpertiseService.findAll();
+        List<DemandeExpertise> demandes = demandeExpertiseService.findBySpecialiste(specialiste);
         request.setAttribute("demandes", demandes);
 
         List<Creneau> creneaux = creneauService.findBySpecialiste(specialiste.getId());

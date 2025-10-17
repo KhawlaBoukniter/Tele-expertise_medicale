@@ -212,7 +212,7 @@
 
             <div class="text-center">
                 <button type="submit" class="btn btn-success px-5 py-2">
-                    <i class="bi bi-person-plus-fill"></i> Créer le spécialiste
+                    <i class="bi bi-person-plus-fill"></i> Mettre à jour profile
                 </button>
             </div>
         </form>

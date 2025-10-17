@@ -30,6 +30,7 @@ public class DossierMedicalDAO {
         }
 
         public void update(DossierMedical dossierMedical){
+            em.getTransaction().begin();
             em.merge(dossierMedical);
             em.getTransaction().commit();
         }

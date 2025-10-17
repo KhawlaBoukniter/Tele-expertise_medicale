@@ -117,7 +117,7 @@
         <div class="alert">${errorMessage}</div>
     </c:if>
 
-    <form action="SignupServlet" method="post">
+    <form action="signupServlet" method="post">
         <label for="nom">Nom</label>
         <input type="text" name="nom" required>
 

@@ -91,10 +91,7 @@
                     </td>
                     <td>${p.dateArrivee}</td>
                     <td>
-                        <a href="dossier?action=view&id=${p.id}">👁️ Voir</a>
-                        <c:if test="${user.role.name() == 'INFIRMIER'}">
-                            | <a href="patient?action=edit&id=${p.id}">✏️ Modifier</a>
-                        </c:if>
+                        <a href="dossierMedical?action=view&id=${p.id}">👁️ Voir</a>
                     </td>
                 </tr>
             </c:forEach>

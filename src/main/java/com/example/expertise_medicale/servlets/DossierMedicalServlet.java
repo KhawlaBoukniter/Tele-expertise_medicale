@@ -53,6 +53,6 @@ public class DossierMedicalServlet extends HttpServlet {
         dossier.setTraitements(traitements);
 
         dossierService.saveOrUpdate(dossier);
-        response.sendRedirect("dossierMedical?action=view&id=" + patientId);
+        response.sendRedirect("patient?action=list");
     }
 }
