@@ -82,7 +82,29 @@ public class DemandeExpertiseServlet extends HttpServlet {
 
             request.getRequestDispatcher("/demandeDetails.jsp").forward(request, response);
         } else if (action.equals("list")) {
-            List<DemandeExpertise> demandes = demandeService.findBySpecialiste(Long.valueOf(specialisteId));
+            Specialiste specialiste = specialisteService.findById(user.getId());
+
+            String statut = request.getParameter("statut");
+            String priorite = request.getParameter("priorite");
+
+            List<DemandeExpertise> demandes = demandeService.findBySpecialiste(specialiste.getId());
+
+            if (statut != null && !statut.isEmpty()) {
+                demandes = demandes.stream()
+                        .filter(d -> d.getStatut() == StatutDemande.valueOf(statut))
+                        .toList();
+            }
+
+            if (priorite != null && !priorite.isEmpty()) {
+                demandes = demandes.stream()
+                        .filter(d -> d.getPriorite() == Priorite.valueOf(priorite))
+                        .toList();
+            }
+
+            if (demandes.isEmpty()) {
+                request.setAttribute("message", "Aucune demande trouvée avec ces critères.");
+            }
+
             request.setAttribute("demandes", demandes);
 
             request.getRequestDispatcher("/listeDemandes.jsp").forward(request, response);

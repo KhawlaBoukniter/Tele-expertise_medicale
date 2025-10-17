@@ -127,6 +127,32 @@
             </a>
         </div>
 
+        <form action="demandeExpertise" method="get" class="d-flex justify-content-center mb-4 gap-3">
+            <input type="hidden" name="action" value="list">
+
+            <div>
+                <label for="statut" class="form-label">Statut :</label>
+                <select name="statut" id="statut" class="form-select">
+                    <option value="">Tous</option>
+                    <option value="EN_ATTENTE">En attente</option>
+                    <option value="REPONDU">Répondue</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="priorite" class="form-label">Priorité :</label>
+                <select name="priorite" id="priorite" class="form-select">
+                    <option value="">Toutes</option>
+                    <option value="NORMALE">Normale</option>
+                    <option value="URGENTE">Urgente</option>
+                </select>
+            </div>
+
+            <div class="align-self-end">
+                <button type="submit" class="btn btn-success">Filtrer</button>
+            </div>
+        </form>
+
         <c:if test="${empty demandes}">
             <div class="alert text-center">Aucune demande d'expertise disponible pour le moment.</div>
         </c:if>
