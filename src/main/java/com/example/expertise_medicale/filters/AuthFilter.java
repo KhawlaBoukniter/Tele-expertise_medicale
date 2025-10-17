@@ -23,7 +23,7 @@ public class AuthFilter implements Filter {
         User user = (User) request.getSession().getAttribute("user");
 
         if (user != null && (path.endsWith("login") || path.endsWith("index.jsp") ||
-                path.endsWith("signup") || path.endsWith("signup.jsp"))) {
+                path.endsWith("signupServlet") || path.endsWith("signup.jsp"))) {
 
             switch (user.getRole()) {
                 case SPECIALISTE -> response.sendRedirect(request.getContextPath() + "/specialiste");
@@ -34,15 +34,17 @@ public class AuthFilter implements Filter {
             return;
         }
 
-        if (path.endsWith("login") || path.endsWith("index.jsp") || path.endsWith("signup") || path.endsWith("signup.jsp")) {
+        if (path.endsWith("login") || path.endsWith("index.jsp") || path.endsWith("signupServlet") || path.endsWith("signup.jsp")) {
             chain.doFilter(request, response);
             return;
         }
 
-        if (user == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
+//        if (user == null && (path.endsWith("login") || path.endsWith("index.jsp") ||
+//                path.endsWith("signup") || path.endsWith("signup.jsp") ||
+//                path.endsWith("signupServlet"))) {
+//            chain.doFilter(request, response);
+//            return;
+//        }
 
         if (path.contains("/specialiste") && !user.getRole().equals(Role.SPECIALISTE)) {
             response.sendRedirect(request.getContextPath() + "/login");

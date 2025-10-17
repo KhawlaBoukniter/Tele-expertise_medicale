@@ -107,6 +107,6 @@ public class SignupServlet extends HttpServlet {
                 return;
         }
 
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("index.jsp");
     }
 }
