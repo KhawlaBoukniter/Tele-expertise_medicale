@@ -66,7 +66,7 @@
         <div class="section-title">Antécédents</div>
         <div class="section-content">
             <c:choose>
-                <c:when test="${user_role == 'INFIRMIER'}">
+                <c:when test="${user.role.name() == 'INFIRMIER'}">
                     <textarea name="antecedents" rows="4" placeholder="Aucun antécédent enregistré">${dossier.antecedents}</textarea>
                 </c:when>
                 <c:otherwise>
@@ -86,7 +86,7 @@
         <div class="section-title">Allergies</div>
         <div class="section-content">
             <c:choose>
-                <c:when test="${user_role == 'INFIRMIER'}">
+                <c:when test="${user.role.name() == 'INFIRMIER'}">
                     <textarea name="allergies" rows="3" placeholder="Aucune allergie signalée">${dossier.allergies}</textarea>
                 </c:when>
                 <c:otherwise>
@@ -105,7 +105,7 @@
         <div class="section-title">Traitements en cours</div>
         <div class="section-content">
             <c:choose>
-                <c:when test="${user_role == 'INFIRMIER'}">
+                <c:when test="${user.role.name() == 'INFIRMIER'}">
                     <textarea name="traitements" rows="3" placeholder="Aucun traitement actif">${dossier.traitements}</textarea>
                 </c:when>
                 <c:otherwise>
@@ -121,7 +121,7 @@
             </c:choose>
         </div>
 
-        <c:if test="${user_role == 'INFIRMIER'}">
+        <c:if test="${user.role.name() == 'INFIRMIER'}">
             <button type="submit" class="btn-submit">💾 Enregistrer les modifications</button>
         </c:if>
     </form>
