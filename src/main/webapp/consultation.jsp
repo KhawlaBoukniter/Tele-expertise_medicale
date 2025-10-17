@@ -95,6 +95,8 @@
 <body>
 
 <div class="container mt-5 mb-5">
+    <jsp:include page="navbar.jsp" />
+
     <c:choose>
         <c:when test="${action == 'edit'}">
             <h2 class="text-center">Modifier la Consultation Médicale</h2>
@@ -105,6 +107,8 @@
     </c:choose>
 
     <form action="consultation" method="post" class="card">
+        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+
         <input type="hidden" name="action" value="${action}">
         <c:if test="${action == 'edit'}">
             <input type="hidden" name="id" value="${consultation.id}">

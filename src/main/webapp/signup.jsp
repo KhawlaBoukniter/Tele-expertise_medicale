@@ -118,6 +118,8 @@
     </c:if>
 
     <form action="signupServlet" method="post">
+        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+
         <label for="nom">Nom</label>
         <input type="text" name="nom" required>
 

@@ -35,6 +35,7 @@
     </style>
 </head>
 <body>
+<jsp:include page="navbar.jsp" />
 
 <div class="container">
     <h2 class="section-title">🩺 Gestion des patients</h2>
@@ -88,6 +89,8 @@
                     <div id="signesVitaux" class="accordion-collapse collapse">
                         <div class="accordion-body">
                             <form action="patient" method="post">
+                                <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+
                                 <input type="hidden" name="action" value="add"/>
                                 <input type="hidden" name="cin" value="${patientFound.id}"/>
 
@@ -146,6 +149,8 @@
                     <div id="nouveauPatient" class="accordion-collapse collapse show">
                         <div class="accordion-body">
                             <form action="patient" method="post">
+                                <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+
                                 <input type="hidden" name="action" value="add"/>
 
                                 <h5>👤 Informations personnelles</h5>

@@ -115,8 +115,11 @@
 </head>
 
 <body>
+
 <div class="container mt-5">
-    <div class="card mx-auto" style="max-width: 1000px;">
+    <jsp:include page="navbar.jsp" />
+
+    <div class="card mt-4 mx-auto" style="max-width: 1000px;">
         <div class="top-bar">
             <h2>📋 Liste des demandes d'expertise</h2>
             <a href="specialiste?action=profile" class="btn-profile">

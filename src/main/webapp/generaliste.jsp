@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>👨‍⚕️ Tableau de bord du médecin généraliste</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
@@ -41,7 +43,8 @@
             margin: 0;
         }
 
-        .btn {
+        .btnp
+ {
             display: inline-block;
             background-color: var(--accent-color);
             color: #fff;
@@ -52,7 +55,8 @@
             transition: 0.3s ease;
         }
 
-        .btn:hover {
+        .btnp
+:hover {
             background-color: var(--accent-hover);
             transform: scale(1.05);
         }
@@ -170,9 +174,11 @@
 </head>
 <body>
 
+
 <header>
     <h1>🏥 Espace Médecin Généraliste</h1>
-    <a href="demandeExpertise?action=add" class="btn">➕ Nouvelle demande d’expertise</a>
+    <a href="demandeExpertise?action=add" class="btnp">➕ Nouvelle demande d’expertise</a>
+    <jsp:include page="navbar.jsp" />
 </header>
 
 <main>

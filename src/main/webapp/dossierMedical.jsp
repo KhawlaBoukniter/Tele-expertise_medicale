@@ -4,6 +4,8 @@
 <head>
     <title>Dossier Médical - ${patient.nom} ${patient.prenom}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
     <style>
         /* Garde ton CSS existant */
         :root { --bg-color: #0d1117; --card-bg: #161b22; --text-color: #e6edf3; --accent-color: #1db954; --secondary-color: #58a6ff; --border-color: #30363d; --danger-color: #ff5555; }
@@ -26,11 +28,14 @@
     </style>
 </head>
 <body>
+<jsp:include page="navbar.jsp" />
 
 <div class="fiche-container">
     <h2>🩺 Dossier Médical de ${patient.nom} ${patient.prenom}</h2>
 
     <form action="dossierMedical" method="post">
+        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+
         <input type="hidden" name="patient_id" value="${patient.id}"/>
 
         <div class="section-title">Informations personnelles</div>

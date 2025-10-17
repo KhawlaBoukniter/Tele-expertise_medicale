@@ -173,8 +173,11 @@
 </head>
 
 <body>
+
 <div class="container py-5">
-    <div class="card mx-auto" style="max-width: 1000px;">
+    <jsp:include page="navbar.jsp" />
+
+    <div class="card mt-4 mx-auto" style="max-width: 1000px;">
         <h2>👨‍⚕️ Créer un spécialiste</h2>
 
         <form id="specialisteForm" action="specialiste" method="post" class="needs-validation" novalidate>

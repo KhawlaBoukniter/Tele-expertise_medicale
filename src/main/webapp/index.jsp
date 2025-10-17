@@ -107,6 +107,8 @@
     </c:if>
 
     <form method="post" action="login">
+        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+
         <input type="text" name="email" placeholder="Email" required><br>
         <input type="password" name="password" placeholder="Mot de passe" required><br>
         <button type="submit">Se connecter</button>

@@ -3,6 +3,8 @@
 <html lang="fr">
 <head>
     <title>Créer une demande d'expertise</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
@@ -92,6 +94,7 @@
     </style>
 </head>
 <body>
+<jsp:include page="navbar.jsp" />
 
 <h2>📄 Nouvelle Demande d'Expertise</h2>
 
@@ -124,6 +127,8 @@
 
 <c:if test="${not empty creneaux or not empty consultations}">
     <form method="post" action="demandeExpertise?action=submit">
+        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+
         <input type="hidden" name="specialiste_id" value="${param.specialisteId}">
 
         <div class="section">

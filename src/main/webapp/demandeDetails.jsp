@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Détails de la Demande d'Expertise</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
@@ -79,7 +81,7 @@
             background-color: #f1f5f9;
         }
 
-        .btn {
+        .btnp {
             display: inline-block;
             padding: 10px 18px;
             background-color: var(--primary);
@@ -90,7 +92,7 @@
             transition: 0.3s ease;
         }
 
-        .btn:hover {
+        .btnp:hover {
             background-color: #0284c7;
         }
 
@@ -154,10 +156,12 @@
     </style>
 </head>
 <body>
+<jsp:include page="navbar.jsp" />
 
 <h2>🩺 Détails de la Demande d’Expertise</h2>
 
 <div class="card">
+
     <div class="card-header">📋 Informations sur la Demande</div>
     <table>
         <tr><th>ID Demande</th><td data-label="ID Demande">${demande.id}</td></tr>
@@ -181,11 +185,13 @@
     <c:if test="${user.role.name() == 'SPECIALISTE'}">
         <div class="avis-section mt-3">
             <form action="demandeExpertise" method="post">
+                <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+
                 <input type="hidden" name="action" value="updateAvis"/>
                 <input type="hidden" name="id" value="${demande.id}"/>
                 <label for="avis">🩺 Donner / Modifier votre avis :</label>
                 <textarea name="avis" id="avis" placeholder="Écrire votre avis ici...">${demande.avis}</textarea>
-                <button type="submit" class="btn submit-btn">💾 Enregistrer l'avis</button>
+                <button type="submit" class="btnp submit-btn">💾 Enregistrer l'avis</button>
             </form>
         </div>
     </c:if>
@@ -204,7 +210,7 @@
 </div>
 
 <div style="text-align:center; margin-top:20px;">
-    <a href="javascript:history.back()" class="btn">⬅ Retour</a>
+    <a href="javascript:history.back()" class="btnp">⬅ Retour</a>
 </div>
 
 </body>

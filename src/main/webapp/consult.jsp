@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Détails de la demande d'expertise</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
@@ -76,7 +78,7 @@
             margin-bottom: 0.5rem;
         }
 
-        .btn {
+        .btnp {
             display: inline-block;
             padding: 10px 18px;
             background-color: var(--primary);
@@ -87,7 +89,7 @@
             transition: 0.3s ease;
         }
 
-        .btn:hover {
+        .btnp:hover {
             background-color: #0284c7;
         }
 
@@ -131,6 +133,9 @@
             color: #166534;
             padding: 10px 15px;
         }
+        .btn-back { text-align:center; padding:10px; border-radius:8px; font-weight:600; text-decoration:none; transition:0.3s ease; }
+        .btn-back { background-color:var(--secondary-color); color:#fff; margin-top:10px;}
+        .btn-back:hover { background-color:var(--accent-color); transform:scale(1.02);}
 
         @media (max-width: 768px) {
             .card {
@@ -141,14 +146,17 @@
 </head>
 
 <body>
+
 <div class="container">
-    <a href="demandeExpertise?action=list" class="btn mb-4">⬅ Retour à la liste</a>
+    <jsp:include page="navbar.jsp" />
+    <a href="javascript:history.back()" class="btnp">
+        ⬅ Retour
+    </a>
 
     <div class="card">
         <div class="card-header">🩺 Détails de la demande d'expertise</div>
         <div class="card-body">
 
-            <!-- Infos générales -->
             <div class="row mb-4">
                 <div class="col-md-6">
                     <p><strong>ID :</strong> ${demande.id}</p>
@@ -180,7 +188,6 @@
                 </div>
             </div>
 
-            <!-- Question -->
             <div>
                 <h5 class="section-title">❓ Question du médecin</h5>
                 <div class="border-box">
@@ -188,7 +195,6 @@
                 </div>
             </div>
 
-            <!-- Consultation -->
             <div>
                 <h5 class="section-title">📋 Informations sur la consultation</h5>
                 <div class="border-box">
@@ -203,18 +209,19 @@
                 </div>
             </div>
 
-            <!-- Avis du spécialiste -->
             <div>
                 <h5 class="section-title">🧠 Avis du spécialiste</h5>
                 <c:choose>
                     <c:when test="${empty demande.avis}">
                         <form action="demandeExpertise?action=consult" method="post" class="mt-3">
+                            <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+
                             <input type="hidden" name="demande_id" value="${demande.id}">
                             <div class="mb-3">
                                 <label for="avis">Votre avis :</label>
                                 <textarea name="avis" id="avis" placeholder="Saisissez ici votre avis médical..." required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-success">✅ Enregistrer l’avis</button>
+                            <button type="submit" class="btnp btn-success">✅ Enregistrer l’avis</button>
                         </form>
                     </c:when>
                     <c:otherwise>
