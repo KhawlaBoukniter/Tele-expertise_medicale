@@ -38,6 +38,5 @@ public class CreneauDAO {
 
         public List<Creneau> findAll(){
             return em.createQuery("from Creneau ", Creneau.class).getResultList();
-
         }
 }

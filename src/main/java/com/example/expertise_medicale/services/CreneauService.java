@@ -18,11 +18,11 @@ public class CreneauService {
     }
 
     public List<Creneau> getAllCreneau(){
-        return creneauDAO.findAll();
+        return creneauDAO.findAll().stream().filter(Creneau::getDisponible).collect(toList());
     }
 
     public List<Creneau> findBySpecialiste(Long specialisteId){
-        return getAllCreneau().stream().filter(c -> c.getSpecialiste().getId().equals(specialisteId)).toList();
+        return getAllCreneau().stream().filter(c -> c.getSpecialiste().getId().equals(specialisteId)).filter(Creneau::getDisponible).toList();
     }
 
     public List<Creneau> getCreneauxDisponibles(Long specialisteId) {
