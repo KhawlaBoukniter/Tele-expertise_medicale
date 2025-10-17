@@ -1,6 +1,7 @@
 package com.example.expertise_medicale.dao;
 
 import com.example.expertise_medicale.models.Generaliste;
+import com.example.expertise_medicale.utils.Jpa;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -8,7 +9,6 @@ import jakarta.persistence.Persistence;
 import java.util.List;
 
 public class UserDAO<T> {
-    public static EntityManagerFactory emf = Persistence.createEntityManagerFactory("expertiseMedicale");
     private final Class<T> entityClass;
 
     public UserDAO(Class<T> entityClass) {
@@ -16,7 +16,7 @@ public class UserDAO<T> {
     }
 
     public void add(T t){
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = Jpa.getEntityManager();
 
         em.getTransaction().begin();
         em.persist(t);
@@ -25,7 +25,7 @@ public class UserDAO<T> {
     }
 
     public void update(T t){
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = Jpa.getEntityManager();
 
         em.getTransaction().begin();
         em.merge(t);
@@ -34,17 +34,17 @@ public class UserDAO<T> {
     }
 
     public T find(String id){
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = Jpa.getEntityManager();
         return em.find(entityClass, id);
     }
 
     public void delete(T t){
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = Jpa.getEntityManager();
         em.remove(t);
     }
 
     public List<T> findAll(){
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = Jpa.getEntityManager();
 
         List<T> list = em.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e", entityClass).getResultList();
         return list;
