@@ -9,6 +9,7 @@ import com.example.expertise_medicale.models.enums.PatientStatus;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 public class PatientService {
@@ -19,13 +20,11 @@ public class PatientService {
     public void add(Patient patient, SigneVital signeVital) {
         if (findById(patient.getId()) == null) {
             patientDAO.add(patient);
-            signeVital.setPatient(patient);
-            signeVitalDAO.add(signeVital);
         } else {
-            signeVital.setPatient(patient);
-            signeVitalDAO.add(signeVital);
+            patientDAO.update(patient);
         }
-
+        signeVital.setPatient(patient);
+        signeVitalDAO.add(signeVital);
     }
 
     public void update(Patient patient) {
@@ -38,7 +37,9 @@ public class PatientService {
 
     public List<Patient> findByToday() {
         return findAll().stream()
-                .filter(p -> p.getDateArrivee().toLocalDate().equals(LocalDate.now()) && p.getStatus().equals(PatientStatus.EN_ATTENTE))
+                .filter(p -> p.getDateArrivee().toLocalDate().equals(LocalDate.now()))
+                .filter(p -> p.getStatus().equals(PatientStatus.EN_ATTENTE))
+                .sorted(Comparator.comparing(Patient::getDateArrivee))
                 .toList();
     }
 
