@@ -13,6 +13,10 @@ public class CreneauService {
         creneauDAO.add(creneau);
     }
 
+    public void update(Creneau creneau) {
+        creneauDAO.update(creneau);
+    }
+
     public List<Creneau> getAllCreneau(){
         return creneauDAO.findAll();
     }

@@ -22,14 +22,12 @@ public class DemandeExpertiseDAO {
             em.getTransaction().begin();
             em.persist(demandeExpertise);
             em.getTransaction().commit();
-            em.close();
         }
 
         public void update(DemandeExpertise demandeExpertise){
             em.getTransaction().begin();
             em.merge(demandeExpertise);
             em.getTransaction().commit();
-            em.close();
         }
 
         public DemandeExpertise find(Long id){

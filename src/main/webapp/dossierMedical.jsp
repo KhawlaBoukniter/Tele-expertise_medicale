@@ -60,20 +60,65 @@
 
         <div class="section-title">Antécédents</div>
         <div class="section-content">
-            <textarea name="antecedents" rows="4" placeholder="Aucun antécédent enregistré">${dossier.antecedents}</textarea>
+            <c:choose>
+                <c:when test="${user_role == 'INFIRMIER'}">
+                    <textarea name="antecedents" rows="4" placeholder="Aucun antécédent enregistré">${dossier.antecedents}</textarea>
+                </c:when>
+                <c:otherwise>
+                    <c:choose>
+                        <c:when test="${not empty dossier.antecedents}">
+                            ${dossier.antecedents}
+                        </c:when>
+                        <c:otherwise>
+                            <em>Aucun antécédent enregistré</em>
+                        </c:otherwise>
+                    </c:choose>
+                </c:otherwise>
+            </c:choose>
+
         </div>
 
         <div class="section-title">Allergies</div>
         <div class="section-content">
-            <textarea name="allergies" rows="3" placeholder="Aucune allergie signalée">${dossier.allergies}</textarea>
+            <c:choose>
+                <c:when test="${user_role == 'INFIRMIER'}">
+                    <textarea name="allergies" rows="3" placeholder="Aucune allergie signalée">${dossier.allergies}</textarea>
+                </c:when>
+                <c:otherwise>
+                    <c:choose>
+                        <c:when test="${not empty dossier.allergies}">
+                            ${dossier.allergies}
+                        </c:when>
+                        <c:otherwise>
+                            <em>Aucune allergie enregistrée</em>
+                        </c:otherwise>
+                    </c:choose>
+                </c:otherwise>
+            </c:choose>
         </div>
 
         <div class="section-title">Traitements en cours</div>
         <div class="section-content">
-            <textarea name="traitements" rows="3" placeholder="Aucun traitement actif">${dossier.traitements}</textarea>
+            <c:choose>
+                <c:when test="${user_role == 'INFIRMIER'}">
+                    <textarea name="traitements" rows="3" placeholder="Aucun traitement actif">${dossier.traitements}</textarea>
+                </c:when>
+                <c:otherwise>
+                    <c:choose>
+                        <c:when test="${not empty dossier.traitements}">
+                            ${dossier.traitements}
+                        </c:when>
+                        <c:otherwise>
+                            <em>Aucun traitement enregistré</em>
+                        </c:otherwise>
+                    </c:choose>
+                </c:otherwise>
+            </c:choose>
         </div>
 
-        <button type="submit" class="btn-submit">💾 Enregistrer les modifications</button>
+        <c:if test="${user_role == 'INFIRMIER'}">
+            <button type="submit" class="btn-submit">💾 Enregistrer les modifications</button>
+        </c:if>
     </form>
 
     <a href="javascript:history.back()" class="btn-back">⬅ Retour</a>

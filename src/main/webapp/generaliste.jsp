@@ -177,7 +177,6 @@
 
 <main>
 
-    <!-- Section Patients -->
     <section class="section">
         <h2><span>👨‍⚕️</span> Liste des patients</h2>
 
@@ -205,7 +204,7 @@
                             <td data-label="Mutuelle">${p.mutuelle}</td>
                             <td data-label="Date d’arrivée">${p.dateArrivee}</td>
                             <td data-label="Actions">
-                                <a href="dossierMedical?id=${p.id}" class="action-link">📋 Dossier</a>
+                                <a href="dossierMedical?id=${p.id}&user_role=${user.role.name()}" class="action-link">📋 Dossier</a>
                                 <a href="consultation?action=add&patient_id=${p.id}&generaliste_id=${user.id}" class="action-link">💬 Consultation</a>
                             </td>
                         </tr>
@@ -219,7 +218,6 @@
         </c:choose>
     </section>
 
-    <!-- Section Demandes d'expertise -->
     <section class="section">
         <h2><span>🩺</span> Demandes d’expertise en cours</h2>
 

@@ -41,7 +41,6 @@ public class DemandeExpertiseServlet extends HttpServlet {
             request.setAttribute("creneaux", creneaux);
 
             List<Consultation> consultations = consultationService.findEnAttente();
-//            List<Consultation> consultations = consultationService.findByStatusAndSpecialiste(StatutConsultation.EN_ATTENTE_AVIS_SPECIALISTE, Long.parseLong(specialisteId));
             request.setAttribute("consultations", consultations);
         }
 
@@ -99,7 +98,6 @@ public class DemandeExpertiseServlet extends HttpServlet {
 
         }
         else {
-            String patientId = request.getParameter("patient_id");
             String consultationId = request.getParameter("consultation_id");
             String specialisteId = request.getParameter("specialiste_id");
             String question = request.getParameter("question");
@@ -116,6 +114,8 @@ public class DemandeExpertiseServlet extends HttpServlet {
             demande.setSpecialiste(specialisteService.findById(Long.parseLong(specialisteId)));
 
             demandeService.add(demande);
+            creneau.setDisponible(false);
+            creneauService.update(creneau);
 
             response.sendRedirect("generaliste?action=list");
         }
