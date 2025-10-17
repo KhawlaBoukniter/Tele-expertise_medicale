@@ -21,8 +21,8 @@ public class DemandeExpertiseService {
         return demandeExpertiseDAO.findAll();
     }
 
-    public List<DemandeExpertise> findBySpecialiste(Specialiste specialiste) {
-        return findAll().stream().filter(s -> s.getId().equals(specialiste.getId())).toList();
+    public List<DemandeExpertise> findBySpecialiste(Long id) {
+        return findAll().stream().filter(d -> d.getSpecialiste().getId().equals(id)).toList();
     }
 
     public DemandeExpertise findById(Long id) {

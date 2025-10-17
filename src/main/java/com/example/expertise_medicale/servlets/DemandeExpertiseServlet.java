@@ -44,8 +44,7 @@ public class DemandeExpertiseServlet extends HttpServlet {
             request.setAttribute("consultations", consultations);
         }
 
-        List<DemandeExpertise> demandes = demandeService.findAll();
-        request.setAttribute("demandes", demandes);
+        User user = (User) request.getSession().getAttribute("user");
 
         if (action == null) {
             request.getRequestDispatcher("demandeExpertise.jsp").forward(request, response);
@@ -67,12 +66,14 @@ public class DemandeExpertiseServlet extends HttpServlet {
             request.setAttribute("consultation", consultation);
 
             String id = request.getParameter("generaliste_id");
-            User user = generalisteService.findById(Long.parseLong(id));
             request.setAttribute("user", user);
 
 
             request.getRequestDispatcher("/demandeDetails.jsp").forward(request, response);
         } else if (action.equals("list")) {
+            List<DemandeExpertise> demandes = demandeService.findBySpecialiste(Long.valueOf(specialisteId));
+            request.setAttribute("demandes", demandes);
+
             request.getRequestDispatcher("/listeDemandes.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("demandeExpertise.jsp").forward(request, response);

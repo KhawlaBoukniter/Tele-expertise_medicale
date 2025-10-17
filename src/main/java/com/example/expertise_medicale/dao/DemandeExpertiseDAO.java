@@ -39,6 +39,7 @@ public class DemandeExpertiseDAO {
         }
 
         public List<DemandeExpertise> findAll(){
+            em = emf.createEntityManager();
             return em.createQuery("from DemandeExpertise ", DemandeExpertise.class).getResultList();
 
         }

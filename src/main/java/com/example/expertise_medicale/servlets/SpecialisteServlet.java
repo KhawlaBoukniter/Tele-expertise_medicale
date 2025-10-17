@@ -3,6 +3,7 @@ package com.example.expertise_medicale.servlets;
 import com.example.expertise_medicale.models.Creneau;
 import com.example.expertise_medicale.models.DemandeExpertise;
 import com.example.expertise_medicale.models.Specialiste;
+import com.example.expertise_medicale.models.User;
 import com.example.expertise_medicale.models.enums.Specialite;
 import com.example.expertise_medicale.services.CreneauService;
 import com.example.expertise_medicale.services.DemandeExpertiseService;
@@ -35,22 +36,25 @@ public class SpecialisteServlet extends HttpServlet {
             return;
         }
 
-        List<Specialite> specialites = Arrays.asList(Specialite.values());
-        request.setAttribute("specialites", specialites);
+        User user = (User) request.getSession().getAttribute("user");
 
-        Specialiste specialiste = (Specialiste) request.getSession().getAttribute("user");
+        Specialiste specialiste = specialisteService.findById(user.getId());
 
         request.setAttribute("specialiste", specialiste);
 
-        List<DemandeExpertise> demandes = demandeExpertiseService.findBySpecialiste(specialiste);
-        request.setAttribute("demandes", demandes);
-
-        List<Creneau> creneaux = creneauService.findBySpecialiste(specialiste.getId());
-        request.setAttribute("creneaux", creneaux);
-
         if (action.equals("profile")) {
+            List<Specialite> specialites = Arrays.asList(Specialite.values());
+            request.setAttribute("specialites", specialites);
+
+            List<Creneau> creneaux = creneauService.findBySpecialiste(specialiste.getId());
+            request.setAttribute("creneaux", creneaux);
+
+
             request.getRequestDispatcher("specialiste.jsp").forward(request, response);
         } else {
+            List<DemandeExpertise> demandes = demandeExpertiseService.findBySpecialiste(specialiste.getId());
+            request.setAttribute("demandes", demandes);
+
             request.getRequestDispatcher("listeDemandes.jsp").forward(request, response);
         }
 

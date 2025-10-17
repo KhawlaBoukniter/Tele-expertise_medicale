@@ -44,8 +44,6 @@ public class LoginServlet extends HttpServlet {
             List<Patient> patients = patientService.findByToday();
 
             if (user.getRole().equals(Role.GENERALISTE)) {
-//                request.getSession().setAttribute("patients", patients);
-//                request.getRequestDispatcher("/generaliste.jsp").forward(request, response);
                     response.sendRedirect(request.getContextPath() + "/generaliste?action=list");
             } else if (user.getRole().equals(Role.INFIRMIER)) {
                 request.getSession().setAttribute("patients", patients);
