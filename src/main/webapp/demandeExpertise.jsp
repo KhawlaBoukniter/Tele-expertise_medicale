@@ -101,18 +101,30 @@
 <form method="get" action="demandeExpertise">
     <div class="section">
         <label for="specialite">1️⃣ Choisir une spécialité :</label>
-        <select name="specialite" id="specialite" onchange="this.form.submit()">
+        <select name="specialite" id="specialite">
             <option value="">-- Sélectionner une spécialité --</option>
             <c:forEach var="spec" items="${specialites}">
                 <option value="${spec}" <c:if test="${spec == param.specialite}">selected</c:if>>${spec}</option>
             </c:forEach>
         </select>
     </div>
+    <div class="section">
+        <label for="tarifMax">💰 Tarif maximum :</label>
+        <input type="number" name="tarifMax" id="tarifMax" placeholder="Ex : 500" value="${param.tarifMax}">
+    </div>
+    <button type="submit">submit</button>
 </form>
+
+<c:if test="${not empty message}">
+    <div class="section" style="color: var(--danger-color); text-align: center;">
+            ${message}
+    </div>
+</c:if>
 
 <c:if test="${not empty specialistes}">
     <form method="get" action="demandeExpertise">
         <input type="hidden" name="specialite" value="${param.specialite}">
+        <input type="hidden" name="tarifMax" value="${param.tarifMax}">
         <div class="section">
             <label for="specialisteId">2️⃣ Choisir un spécialiste :</label>
             <select name="specialisteId" id="specialisteId" onchange="this.form.submit()">

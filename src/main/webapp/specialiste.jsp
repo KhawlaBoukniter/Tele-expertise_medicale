@@ -183,6 +183,8 @@
         <form id="specialisteForm" action="specialiste" method="post" class="needs-validation" novalidate>
             <input type="hidden" name="action" value="add">
             <input type="hidden" name="specialiste_id" value="${user.id}">
+            <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+
 
             <c:if test="${not empty sessionScope.message}">
                 <div class="alert text-center mb-4">${sessionScope.message}</div>

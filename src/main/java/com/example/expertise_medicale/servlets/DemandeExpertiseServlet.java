@@ -29,10 +29,21 @@ public class DemandeExpertiseServlet extends HttpServlet {
         request.setAttribute("specialites", specialites);
         String action = request.getParameter("action");
 
+        String tarifMaxParam = request.getParameter("tarifMax");
+        Double tarifMax = null;
+
+        if (tarifMaxParam != null && !tarifMaxParam.isEmpty()) {
+            tarifMax = Double.parseDouble(tarifMaxParam);
+        }
+
         String specialite = request.getParameter("specialite");
         if (specialite != null) {
-            List<Specialiste> specialistes = specialisteService.findBySpecialite(Specialite.valueOf(specialite));
+            List<Specialiste> specialistes = specialisteService.findBySpecialiteEtTarif(Specialite.valueOf(specialite), tarifMax);
             request.setAttribute("specialistes", specialistes);
+
+            if (specialistes.isEmpty()) {
+                request.setAttribute("message", "Aucun spécialiste trouvé avec ces spécifications");
+            }
         }
 
         String specialisteId = request.getParameter("specialisteId");
@@ -117,6 +128,10 @@ public class DemandeExpertiseServlet extends HttpServlet {
             demandeService.add(demande);
             creneau.setDisponible(false);
             creneauService.update(creneau);
+
+            Consultation consultation = consultationService.findById(Long.parseLong(consultationId));
+            Specialiste specialiste = specialisteService.findById(Long.parseLong(specialisteId));
+            consultation.setCout(consultation.getCout() + specialiste.getTarif());
 
             response.sendRedirect("generaliste?action=list");
         }

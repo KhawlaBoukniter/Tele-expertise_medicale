@@ -40,7 +40,11 @@ public class UserDAO<T> {
 
     public void delete(T t){
         EntityManager em = Jpa.getEntityManager();
+        em.getTransaction().begin();
+        t = em.merge(t);
         em.remove(t);
+        em.getTransaction().commit();
+        em.close();
     }
 
     public List<T> findAll(){

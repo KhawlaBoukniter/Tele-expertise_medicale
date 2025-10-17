@@ -43,11 +43,12 @@ public class SpecialisteService {
                 .collect(Collectors.toList());
     }
 
-    public List<Specialiste> findBySpecialite(Specialite specialite) {
+    public List<Specialiste> findBySpecialiteEtTarif(Specialite specialite, Double maxTarif) {
         return specialisteDAO.findAll()
                 .stream()
                 .filter(s -> s.getSpecialite().equals(specialite))
-                .collect(Collectors.toList());
+                .filter(s -> s.getTarif() <= maxTarif)
+                .toList();
     }
 
 
