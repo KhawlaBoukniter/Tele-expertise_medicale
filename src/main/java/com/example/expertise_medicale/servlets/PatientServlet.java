@@ -41,12 +41,25 @@ public class PatientServlet extends HttpServlet {
                 request.setAttribute("cinSearch", cinSearch);
                 request.getRequestDispatcher("patient-form.jsp").forward(request, response);
                 break;
-            case "edit":
+            case "filter":
+                String startDateStr = request.getParameter("startDate");
+                String endDateStr = request.getParameter("endDate");
+
+                if (startDateStr != null && endDateStr != null) {
+                    List<Patient> filteredPatients = patientService.findByDateRange(startDateStr, endDateStr);
+
+                    if (filteredPatients.isEmpty()) {
+                        request.setAttribute("message", "Aucun patient trouvé entre " + startDateStr + " et " + endDateStr + ".");
+                    }
+
+                    request.setAttribute("patients", filteredPatients);
+                } else {
+                    request.setAttribute("patients", patientService.findByToday());
+                }
+
+                request.getRequestDispatcher("patients.jsp").forward(request, response);
                 break;
-            case "delete":
-                break;
-            default:
-                break;
+
         }
     }
 

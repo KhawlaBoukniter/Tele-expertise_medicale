@@ -9,6 +9,7 @@ import com.example.expertise_medicale.models.enums.PatientStatus;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -46,4 +47,19 @@ public class PatientService {
     public Patient findById(String id) {
         return findAll().stream().filter(p -> id.equals(p.getId())).findFirst().orElse(null);
     }
+
+    public List<Patient> findByDateRange(String startDateStr, String endDateStr) {
+        LocalDate start = LocalDate.parse(startDateStr);
+        LocalDate end = LocalDate.parse(endDateStr);
+
+        return patientDAO.findAll().stream()
+                .filter(p -> {
+                    LocalDate date = p.getDateArrivee().toLocalDate();
+                    return (date.isEqual(start) || date.isAfter(start)) &&
+                            (date.isEqual(end) || date.isBefore(end));
+                })
+                .sorted((p1, p2) -> p2.getDateArrivee().compareTo(p1.getDateArrivee()))
+                .toList();
+    }
+
 }

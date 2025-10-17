@@ -70,6 +70,28 @@
     <a href="patient?action=add">➕ Ajouter un patient</a>
 </c:if>
 
+<form action="patient" method="get" class="d-flex justify-content-center mb-4">
+    <input type="hidden" name="action" value="filter">
+    <div class="me-2">
+        <label for="startDate" class="form-label">Du :</label>
+        <input type="date" name="startDate" id="startDate" class="form-control" required>
+    </div>
+    <div class="me-2">
+        <label for="endDate" class="form-label">Au :</label>
+        <input type="date" name="endDate" id="endDate" class="form-control" required>
+    </div>
+    <div class="align-self-end">
+        <button type="submit" class="btn btn-success">Filtrer</button>
+    </div>
+</form>
+
+<c:if test="${not empty message}">
+    <div class="alert alert-warning text-center w-75 mx-auto mt-3">
+            ${message}
+    </div>
+</c:if>
+
+
 <c:choose>
     <c:when test="${not empty patients}">
         <table>
