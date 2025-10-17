@@ -22,7 +22,7 @@ public class AuthFilter implements Filter {
         String path = request.getRequestURI();
         User user = (User) request.getSession().getAttribute("user");
 
-        if (user != null && (path.endsWith("login") || path.endsWith("login.jsp") ||
+        if (user != null && (path.endsWith("login") || path.endsWith("index.jsp") ||
                 path.endsWith("signup") || path.endsWith("signup.jsp"))) {
 
             switch (user.getRole()) {
@@ -34,7 +34,7 @@ public class AuthFilter implements Filter {
             return;
         }
 
-        if (path.endsWith("login") || path.endsWith("login.jsp") || path.endsWith("signup") || path.endsWith("signup.jsp")) {
+        if (path.endsWith("login") || path.endsWith("index.jsp") || path.endsWith("signup") || path.endsWith("signup.jsp")) {
             chain.doFilter(request, response);
             return;
         }
